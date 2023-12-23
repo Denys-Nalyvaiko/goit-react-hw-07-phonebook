@@ -4,7 +4,7 @@ import ListItemAvatar from '@mui/material/ListItemAvatar';
 import ListItemText from '@mui/material/ListItemText';
 import Avatar from '@mui/material/Avatar';
 import IconButton from '@mui/material/IconButton';
-import FolderIcon from '@mui/icons-material/Folder';
+import PersonIcon from '@mui/icons-material/Person';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { deleteContact } from '../../redux/contacts/contactsOperations';
 
@@ -29,7 +29,7 @@ export const ContactItem = ({ id, name, phone }) => {
     >
       <ListItemAvatar>
         <Avatar sx={{ backgroundColor: '#f6d9b1', color: '#252525' }}>
-          <FolderIcon />
+          <PersonIcon fontSize="large" />
         </Avatar>
       </ListItemAvatar>
       <ListItemText
