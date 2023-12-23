@@ -56,7 +56,7 @@ export const ContactList = () => {
         </Box>
       )}
 
-      {error && <InfoTitle>Requets Error...</InfoTitle>}
+      {error && !contacts.length && <InfoTitle>Requets Error...</InfoTitle>}
     </>
   );
 };

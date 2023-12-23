@@ -6,13 +6,13 @@ import Avatar from '@mui/material/Avatar';
 import IconButton from '@mui/material/IconButton';
 import FolderIcon from '@mui/icons-material/Folder';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { removeContact } from '../../redux/contacts/contactsSlice';
+import { deleteContact } from '../../redux/contacts/contactsOperations';
 
 export const ContactItem = ({ id, name, phone }) => {
   const dispatch = useDispatch();
 
   const handleDeleteButtonClick = id => {
-    dispatch(removeContact(id));
+    dispatch(deleteContact(id));
   };
 
   return (

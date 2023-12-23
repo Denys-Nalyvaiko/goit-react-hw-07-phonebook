@@ -4,27 +4,27 @@ import { nanoid } from 'nanoid';
 import { Notify } from 'notiflix';
 import Button from '@mui/material/Button';
 import ReactInputMask from 'react-input-mask';
-import { addContact } from '../../redux/contacts/contactsSlice';
+import { addContact } from '../../redux/contacts/contactsOperations';
 import { selectContacts } from '../../redux/contacts/selectContacts';
 import { FormBox, TextInput } from './ContactForm.styled';
 
 export const ContactForm = () => {
   const [name, setName] = useState('');
-  const [number, setNumber] = useState('');
+  const [phone, setPhone] = useState('');
   const dispatch = useDispatch();
   const contacts = useSelector(selectContacts);
 
   const options = {
     name: setName,
-    number: setNumber,
+    phone: setPhone,
   };
   const nameInputId = nanoid();
-  const numberInputId = nanoid();
+  const phoneInputId = nanoid();
 
   const handleFormSubmit = event => {
     event.preventDefault();
 
-    const currentContact = { name, number };
+    const currentContact = { name, phone };
     const isContactNameAlreadyExist = contacts.find(
       ({ name }) =>
         name.toLowerCase().trim() === currentContact.name.toLowerCase().trim()
@@ -46,7 +46,7 @@ export const ContactForm = () => {
 
   const reset = () => {
     setName('');
-    setNumber('');
+    setPhone('');
   };
 
   return (
@@ -73,18 +73,18 @@ export const ContactForm = () => {
         onChange={handleInputChange}
       />
       <ReactInputMask
-        mask="999-99-99"
+        mask="999-999-9999"
         maskChar=""
-        value={number}
+        value={phone}
         onChange={handleInputChange}
       >
         {() => (
           <TextInput
-            label="Number"
+            label="phone"
             variant="outlined"
             type="tel"
-            name="number"
-            id={numberInputId}
+            name="phone"
+            id={phoneInputId}
             required
           />
         )}
