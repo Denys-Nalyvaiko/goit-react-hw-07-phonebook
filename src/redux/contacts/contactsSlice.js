@@ -7,6 +7,24 @@ const initialState = {
   error: null,
 };
 
+const handlePending = state => ({
+  ...state,
+  isLoading: true,
+});
+
+const handleFetchContactsFulfilled = (state, { payload }) => ({
+  ...state,
+  list: [...payload],
+  isLoading: false,
+  error: null,
+});
+
+const handleRejected = (state, { error }) => ({
+  ...state,
+  error,
+  isLoading: false,
+});
+
 const contactsSlice = createSlice({
   name: 'contacts',
   initialState,
@@ -24,21 +42,9 @@ const contactsSlice = createSlice({
   },
   extraReducers: builder => {
     builder
-      .addCase(operations.fetchContacts.pending, state => ({
-        ...state,
-        isLoading: true,
-      }))
-      .addCase(operations.fetchContacts.fulfilled, (state, { payload }) => ({
-        ...state,
-        list: [...payload],
-        isLoading: false,
-        error: null,
-      }))
-      .addCase(operations.fetchContacts.rejected, (state, { error }) => ({
-        ...state,
-        error,
-        isLoading: false,
-      }));
+      .addCase(operations.fetchContacts.pending, handlePending)
+      .addCase(operations.fetchContacts.fulfilled, handleFetchContactsFulfilled)
+      .addCase(operations.fetchContacts.rejected, handleRejected);
   },
 });
 
