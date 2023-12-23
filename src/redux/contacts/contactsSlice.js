@@ -39,20 +39,21 @@ const handleRejected = (state, { payload }) => ({
   isLoading: false,
 });
 
+const isPendingAction = action =>
+  typeof action.type === 'string' && action.type.endsWith('/pending');
+
+const isRejectedAction = action => action.type.endsWith('/rejected');
+
 const contactsSlice = createSlice({
   name: 'contacts',
   initialState,
   extraReducers: builder => {
     builder
-      .addCase(operations.fetchContacts.pending, handlePending)
       .addCase(operations.fetchContacts.fulfilled, handleFetchContactsFulfilled)
-      .addCase(operations.fetchContacts.rejected, handleRejected)
-      .addCase(operations.addContact.pending, handlePending)
       .addCase(operations.addContact.fulfilled, handleAddContactFulfilled)
-      .addCase(operations.addContact.rejected, handleRejected)
-      .addCase(operations.deleteContact.pending, handlePending)
       .addCase(operations.deleteContact.fulfilled, handleDeleteContact)
-      .addCase(operations.deleteContact.rejected, handleRejected);
+      .addMatcher(isPendingAction, handlePending)
+      .addMatcher(isRejectedAction, handleRejected);
   },
 });
 
