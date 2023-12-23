@@ -1,5 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import * as operations from './contactsOperations';
+import * as responceHandlers from './handleResponceActions';
+import * as actionCheker from './checkAction';
 
 const initialState = {
   list: [],
@@ -7,55 +9,29 @@ const initialState = {
   error: null,
 };
 
-const handlePending = state => ({
-  ...state,
-  isLoading: true,
-});
-
-const handleFetchContactsFulfilled = (state, { payload }) => ({
-  ...state,
-  list: [...payload],
-  isLoading: false,
-  error: null,
-});
-
-const handleAddContactFulfilled = (state, { payload }) => ({
-  ...state,
-  list: [...state.list, { ...payload }],
-  isLoading: false,
-  error: null,
-});
-
-const handleDeleteContact = (state, { payload }) => ({
-  ...state,
-  list: state.list.filter(({ id }) => id !== payload.id),
-  isLoading: false,
-  error: null,
-});
-
-const handleRejected = (state, { payload }) => ({
-  ...state,
-  error: payload,
-  isLoading: false,
-});
-
-const isPendingAction = action =>
-  typeof action.type === 'string' && action.type.endsWith('/pending');
-
-const isRejectedAction = action => action.type.endsWith('/rejected');
-
 const contactsSlice = createSlice({
   name: 'contacts',
   initialState,
   extraReducers: builder => {
     builder
-      .addCase(operations.fetchContacts.fulfilled, handleFetchContactsFulfilled)
-      .addCase(operations.addContact.fulfilled, handleAddContactFulfilled)
-      .addCase(operations.deleteContact.fulfilled, handleDeleteContact)
-      .addMatcher(isPendingAction, handlePending)
-      .addMatcher(isRejectedAction, handleRejected);
+      .addCase(
+        operations.fetchContacts.fulfilled,
+        responceHandlers.handleFetchContactsFulfilled
+      )
+      .addCase(
+        operations.addContact.fulfilled,
+        responceHandlers.handleAddContactFulfilled
+      )
+      .addCase(
+        operations.deleteContact.fulfilled,
+        responceHandlers.handleDeleteContact
+      )
+      .addMatcher(actionCheker.isPendingAction, responceHandlers.handlePending)
+      .addMatcher(
+        actionCheker.isRejectedAction,
+        responceHandlers.handleRejected
+      );
   },
 });
 
-export const { addContact, removeContact } = contactsSlice.actions;
 export const contactsReducer = contactsSlice.reducer;

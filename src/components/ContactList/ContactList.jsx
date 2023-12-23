@@ -47,9 +47,11 @@ export const ContactList = () => {
           <Grid item xs={12} md={6}>
             <Demo>
               <List>
-                {filteredContacts.map(({ id, name, phone }) => (
-                  <ContactItem key={id} id={id} name={name} phone={phone} />
-                ))}
+                {filteredContacts
+                  .map(({ id, name, phone }) => (
+                    <ContactItem key={id} id={id} name={name} phone={phone} />
+                  ))
+                  .toReversed()}
               </List>
             </Demo>
           </Grid>
