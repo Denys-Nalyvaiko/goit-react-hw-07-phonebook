@@ -1,3 +1,3 @@
-export * as fetchContacts from './fetchContacts';
-export * as addContact from './addContact';
-export * as deleteContact from './deleteContact';
+export { fetchContacts } from './fetchContacts';
+export { addContact } from './addContact';
+export { deleteContact } from './deleteContact';
