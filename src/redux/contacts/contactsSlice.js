@@ -19,17 +19,12 @@ const handleFetchContactsFulfilled = (state, { payload }) => ({
   error: null,
 });
 
-const handleAddContactFulfilled = (state, { payload }) => {
-  console.log('state: ', state);
-  console.log('payload: ', payload);
-
-  return {
-    ...state,
-    list: [{ ...payload }, ...state.list],
-    isLoading: false,
-    error: null,
-  };
-};
+const handleAddContactFulfilled = (state, { payload }) => ({
+  ...state,
+  list: [...state.list, { ...payload }],
+  isLoading: false,
+  error: null,
+});
 
 const handleDeleteContact = (state, { payload }) => ({
   ...state,
@@ -38,26 +33,15 @@ const handleDeleteContact = (state, { payload }) => ({
   error: null,
 });
 
-const handleRejected = (state, { error }) => ({
+const handleRejected = (state, { payload }) => ({
   ...state,
-  error,
+  error: payload,
   isLoading: false,
 });
 
 const contactsSlice = createSlice({
   name: 'contacts',
   initialState,
-  // reducers: {
-  // addContact: {
-  //   reducer: (state, { payload }) => ({
-  //     list: [{ ...payload }, ...state.list],
-  //   }),
-  //   prepare: contactInfo => ({ payload: { id: nanoid(), ...contactInfo } }),
-  // },
-  // removeContact: (state, action) => ({
-  //   list: state.list.filter(({ id }) => id !== action.payload),
-  // }),
-  // },
   extraReducers: builder => {
     builder
       .addCase(operations.fetchContacts.pending, handlePending)
