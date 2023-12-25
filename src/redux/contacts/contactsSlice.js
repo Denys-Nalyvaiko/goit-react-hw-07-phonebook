@@ -28,6 +28,10 @@ const contactsSlice = createSlice({
       )
       .addMatcher(actionCheker.isPendingAction, responceHandlers.handlePending)
       .addMatcher(
+        actionCheker.isFulfilledAction,
+        responceHandlers.handleFulfilled
+      )
+      .addMatcher(
         actionCheker.isRejectedAction,
         responceHandlers.handleRejected
       );

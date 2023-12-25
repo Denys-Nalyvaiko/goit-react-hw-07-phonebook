@@ -1,6 +1,8 @@
-const isPendingAction = action =>
-  typeof action.type === 'string' && action.type.endsWith('/pending');
+const isPendingAction = ({ type }) =>
+  typeof type === 'string' && type.endsWith('/pending');
 
-const isRejectedAction = action => action.type.endsWith('/rejected');
+const isFulfilledAction = ({ type }) => type.endsWith('/fulfilled');
 
-export { isPendingAction, isRejectedAction };
+const isRejectedAction = ({ type }) => type.endsWith('/rejected');
+
+export { isPendingAction, isFulfilledAction, isRejectedAction };

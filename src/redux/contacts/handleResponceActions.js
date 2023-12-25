@@ -3,25 +3,25 @@ const handlePending = state => ({
   isLoading: true,
 });
 
+const handleFulfilled = state => ({
+  ...state,
+  isLoading: false,
+  error: null,
+});
+
 const handleFetchContactsFulfilled = (state, { payload }) => ({
   ...state,
   list: [...payload],
-  isLoading: false,
-  error: null,
 });
 
 const handleAddContactFulfilled = (state, { payload }) => ({
   ...state,
   list: [...state.list, { ...payload }],
-  isLoading: false,
-  error: null,
 });
 
 const handleDeleteContact = (state, { payload }) => ({
   ...state,
   list: state.list.filter(({ id }) => id !== payload.id),
-  isLoading: false,
-  error: null,
 });
 
 const handleRejected = (state, { payload }) => ({
@@ -32,6 +32,7 @@ const handleRejected = (state, { payload }) => ({
 
 export {
   handlePending,
+  handleFulfilled,
   handleFetchContactsFulfilled,
   handleAddContactFulfilled,
   handleDeleteContact,
